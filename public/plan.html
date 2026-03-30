@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JewelGen — Product Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf9f7;
+    --bg2: #f5f3ef;
+    --bg3: #ffffff;
+    --tx: #1a1a1a;
+    --tx2: #4a4a4a;
+    --tx3: #8a8a8a;
+    --gold: #c9a96e;
+    --gold-light: #d4bc8e;
+    --gold-dark: #a88b4a;
+    --border: #e8e4de;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--tx);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, h5 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  /* ─── Hero ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 24px;
+    background: linear-gradient(180deg, #fff 0%, var(--bg) 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(201,169,110,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 20px;
+    border-radius: 100px;
+    background: rgba(201,169,110,0.1);
+    color: var(--gold-dark);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+
+  .hero h1 {
+    font-size: clamp(48px, 8vw, 96px);
+    font-weight: 300;
+    letter-spacing: -1px;
+    margin-bottom: 24px;
+    color: var(--tx);
+  }
+
+  .hero h1 span {
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 600;
+  }
+
+  .hero-sub {
+    font-size: clamp(18px, 2.5vw, 24px);
+    color: var(--tx2);
+    max-width: 600px;
+    font-weight: 300;
+    margin-bottom: 48px;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 48px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .hero-stat {
+    text-align: center;
+  }
+
+  .hero-stat .num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px;
+    font-weight: 600;
+    color: var(--gold);
+    display: block;
+  }
+
+  .hero-stat .label {
+    font-size: 11px;
+    color: var(--tx3);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 500;
+  }
+
+  /* ─── Sections ─── */
+  section {
+    padding: 100px 24px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+
+  section h2 {
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 400;
+    margin-bottom: 24px;
+    color: var(--tx);
+  }
+
+  section h2 em {
+    font-style: italic;
+    color: var(--gold-dark);
+  }
+
+  .section-intro {
+    font-size: 18px;
+    color: var(--tx2);
+    max-width: 700px;
+    margin-bottom: 48px;
+    line-height: 1.8;
+  }
+
+  /* ─── Divider ─── */
+  .divider {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .divider hr {
+    border: none;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ─── Problem ─── */
+  .problem-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  .problem-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+  }
+
+  .problem-card .icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(201,169,110,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+
+  .problem-card h4 {
+    font-size: 20px;
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+
+  .problem-card p {
+    font-size: 14px;
+    color: var(--tx2);
+    line-height: 1.7;
+  }
+
+  /* ─── How It Works ─── */
+  .flow-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+    margin-top: 48px;
+  }
+
+  .flow-step {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 32px;
+    padding: 32px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: start;
+  }
+
+  .flow-step:last-child { border-bottom: none; }
+
+  .step-num {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .step-content h4 {
+    font-size: 22px;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+
+  .step-content p {
+    font-size: 15px;
+    color: var(--tx2);
+    line-height: 1.7;
+    max-width: 600px;
+  }
+
+  .step-detail {
+    margin-top: 16px;
+    padding: 16px 20px;
+    background: var(--bg2);
+    border-radius: 12px;
+    font-size: 13px;
+    color: var(--tx2);
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    line-height: 1.8;
+  }
+
+  /* ─── Machine Diagram ─── */
+  .machine-section {
+    background: var(--tx);
+    color: #fff;
+    padding: 100px 24px;
+    margin: 0;
+    max-width: 100%;
+  }
+
+  .machine-section .inner {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .machine-section .section-label { color: var(--gold-light); }
+  .machine-section h2 { color: #fff; }
+  .machine-section .section-intro { color: rgba(255,255,255,0.6); }
+
+  .machine-diagram {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 48px;
+    margin-top: 48px;
+    font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+    font-size: 13px;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.7);
+    overflow-x: auto;
+    white-space: pre;
+  }
+
+  .machine-diagram .gold { color: var(--gold-light); }
+  .machine-diagram .dim { color: rgba(255,255,255,0.3); }
+  .machine-diagram .bright { color: #fff; font-weight: 600; }
+
+  .spec-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 24px;
+    margin-top: 48px;
+  }
+
+  .spec-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 24px;
+  }
+
+  .spec-card .val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--gold-light);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .spec-card .desc {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* ─── Components ─── */
+  .components-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 32px;
+  }
+
+  .components-table th {
+    text-align: left;
+    padding: 12px 16px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: rgba(255,255,255,0.4);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+  }
+
+  .components-table td {
+    padding: 14px 16px;
+    font-size: 14px;
+    color: rgba(255,255,255,0.7);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-family: 'Inter', sans-serif;
+  }
+
+  .components-table td:last-child {
+    text-align: right;
+    font-family: 'SF Mono', monospace;
+    color: var(--gold-light);
+  }
+
+  .components-table tr:last-child td {
+    border-bottom: none;
+    font-weight: 600;
+    color: #fff;
+  }
+
+  .components-table tr:last-child td:last-child {
+    color: var(--gold);
+    font-size: 18px;
+  }
+
+  /* ─── Business Model ─── */
+  .revenue-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 48px;
+  }
+
+  .revenue-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .revenue-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  }
+
+  .revenue-card .type {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--gold-dark);
+    margin-bottom: 12px;
+  }
+
+  .revenue-card h4 {
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+
+  .revenue-card p {
+    font-size: 14px;
+    color: var(--tx2);
+    line-height: 1.6;
+  }
+
+  .revenue-card .margin {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 4px 12px;
+    border-radius: 100px;
+    background: rgba(201,169,110,0.1);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gold-dark);
+  }
+
+  /* ─── Timeline ─── */
+  .timeline {
+    position: relative;
+    margin-top: 48px;
+    padding-left: 40px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, var(--gold), var(--border));
+  }
+
+  .timeline-item {
+    position: relative;
+    padding: 0 0 48px 32px;
+  }
+
+  .timeline-item:last-child { padding-bottom: 0; }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -32px;
+    top: 6px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 3px solid var(--bg);
+    box-shadow: 0 0 0 2px var(--gold);
+  }
+
+  .timeline-date {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gold-dark);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  .timeline-item h4 {
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+
+  .timeline-item p {
+    font-size: 14px;
+    color: var(--tx2);
+    line-height: 1.7;
+    max-width: 600px;
+  }
+
+  .timeline-deliverables {
+    margin-top: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .timeline-deliverables span {
+    padding: 4px 12px;
+    border-radius: 100px;
+    background: var(--bg2);
+    font-size: 12px;
+    color: var(--tx2);
+    border: 1px solid var(--border);
+  }
+
+  /* ─── SKU ─── */
+  .sku-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-top: 48px;
+  }
+
+  .sku-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 36px;
+    text-align: center;
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .sku-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+  }
+
+  .sku-card.featured {
+    border-color: var(--gold);
+    box-shadow: 0 4px 24px rgba(201,169,110,0.15);
+  }
+
+  .sku-card.featured::before {
+    content: 'MOST POPULAR';
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 4px 16px;
+    border-radius: 100px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+  }
+
+  .sku-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .sku-target {
+    font-size: 12px;
+    color: var(--tx3);
+    margin-bottom: 20px;
+  }
+
+  .sku-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 600;
+    color: var(--gold-dark);
+    margin-bottom: 24px;
+  }
+
+  .sku-price span { font-size: 20px; color: var(--tx3); }
+
+  .sku-features {
+    list-style: none;
+    text-align: left;
+  }
+
+  .sku-features li {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    color: var(--tx2);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .sku-features li:last-child { border-bottom: none; }
+
+  .sku-features li::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+
+  /* ─── Vision ─── */
+  .vision-section {
+    background: linear-gradient(180deg, var(--bg) 0%, #fff 100%);
+    text-align: center;
+    padding: 120px 24px;
+    max-width: 100%;
+  }
+
+  .vision-section .inner {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .vision-section h2 {
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 300;
+    margin-bottom: 24px;
+  }
+
+  .vision-section p {
+    font-size: 18px;
+    color: var(--tx2);
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+
+  .vision-section .signature {
+    margin-top: 48px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-style: italic;
+    color: var(--gold-dark);
+  }
+
+  /* ─── Footer ─── */
+  footer {
+    text-align: center;
+    padding: 48px 24px;
+    font-size: 12px;
+    color: var(--tx3);
+    border-top: 1px solid var(--border);
+  }
+
+  footer a {
+    color: var(--gold-dark);
+    text-decoration: none;
+  }
+
+  /* ─── Gravity Comparison ─── */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 48px;
+  }
+
+  .compare-card {
+    border-radius: 16px;
+    padding: 32px;
+  }
+
+  .compare-card.old {
+    background: #f5f0f0;
+    border: 1px solid #e0d8d8;
+  }
+
+  .compare-card.new {
+    background: rgba(201,169,110,0.06);
+    border: 1px solid var(--gold-light);
+  }
+
+  .compare-card h4 {
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+
+  .compare-card ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .compare-card ul li {
+    font-size: 14px;
+    color: var(--tx2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .compare-card.old ul li::before { content: '//'; color: #c0a0a0; font-weight: 700; }
+  .compare-card.new ul li::before { content: '->'; color: var(--gold); font-weight: 700; font-family: monospace; }
+
+  /* ─── Ecosystem Visual ─── */
+  .ecosystem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    margin-top: 48px;
+    padding: 48px;
+    background: var(--bg2);
+    border-radius: 20px;
+    border: 1px solid var(--border);
+  }
+
+  .eco-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .eco-node {
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 500;
+    text-align: center;
+    min-width: 140px;
+  }
+
+  .eco-node.primary {
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: #fff;
+    font-size: 16px;
+    padding: 16px 32px;
+    font-weight: 600;
+  }
+
+  .eco-node.software { background: var(--bg3); border: 1px solid var(--border); color: var(--tx); }
+  .eco-node.hardware { background: var(--tx); color: #fff; }
+  .eco-node.revenue { background: rgba(201,169,110,0.15); color: var(--gold-dark); border: 1px solid var(--gold-light); }
+
+  .eco-arrow {
+    font-size: 18px;
+    color: var(--tx3);
+  }
+
+  @media (max-width: 768px) {
+    .compare-grid { grid-template-columns: 1fr; }
+    .flow-step { grid-template-columns: 56px 1fr; gap: 20px; }
+    .machine-diagram { font-size: 10px; padding: 24px; }
+    .hero-stats { gap: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════ HERO ════════════════ -->
+<section class="hero">
+  <div class="hero-badge">Product Plan 2026</div>
+  <h1>Jewel<span>Gen</span></h1>
+  <p class="hero-sub">The world's first gravity-powered bead necklace printer. Design on screen. Print in seconds.</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="num">30s</span>
+      <span class="label">Per necklace</span>
+    </div>
+    <div class="hero-stat">
+      <span class="num">$130</span>
+      <span class="label">Build cost</span>
+    </div>
+    <div class="hero-stat">
+      <span class="num">$0</span>
+      <span class="label">Moving robots</span>
+    </div>
+    <div class="hero-stat">
+      <span class="num">1</span>
+      <span class="label">Motor total</span>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ THE PROBLEM ════════════════ -->
+<section>
+  <div class="section-label">The Problem</div>
+  <h2>Beading is stuck in the <em>dark ages</em></h2>
+  <p class="section-intro">A $300 billion jewellery market with a fabrication layer that hasn't changed in centuries. Every necklace is still made the same way: one bead, one hand, one aching back at a time.</p>
+
+  <div class="problem-grid">
+    <div class="problem-card">
+      <div class="icon">T</div>
+      <h4>Time Drain</h4>
+      <p>A single beaded necklace takes 30-90 minutes by hand. A batch of 20 for a market stall? That's an entire weekend gone. Time that should be spent designing, selling, or living.</p>
+    </div>
+    <div class="problem-card">
+      <div class="icon">R</div>
+      <h4>Repetitive Strain</h4>
+      <p>Hand beading causes eye fatigue, neck strain, and repetitive stress injuries. Professional beaders regularly develop carpal tunnel. The craft literally hurts the maker.</p>
+    </div>
+    <div class="problem-card">
+      <div class="icon">S</div>
+      <h4>Scaling Is Impossible</h4>
+      <p>Want to sell 100 necklaces? Hire helpers, train them, quality-check everything, manage the stress. The only way to scale hand beading is more hands. That doesn't scale.</p>
+    </div>
+    <div class="problem-card">
+      <div class="icon">E</div>
+      <h4>Errors Are Expensive</h4>
+      <p>One wrong bead on row 47 means unthreading half the necklace. Counting errors, pattern mistakes, and colour mismatches waste materials and morale.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- ════════════════ THE INSIGHT ════════════════ -->
+<section>
+  <div class="section-label">The Insight</div>
+  <h2>Beads fall <em>down</em>. That's free.</h2>
+  <p class="section-intro">Every existing solution tries to pick beads up and place them — robot arms, tweezers, vacuum nozzles. Expensive. Complex. Fragile. We asked a different question: what if the beads just fell into place?</p>
+
+  <div class="compare-grid">
+    <div class="compare-card old">
+      <h4>The Robot Approach</h4>
+      <ul>
+        <li>Pick-and-place robot arm ($5,000+)</li>
+        <li>Vision system for bead identification</li>
+        <li>Complex calibration and maintenance</li>
+        <li>Slow: pick, move, place, return, repeat</li>
+        <li>Bulky, heavy, intimidating</li>
+        <li>Breaks when misaligned by 0.5mm</li>
+      </ul>
+    </div>
+    <div class="compare-card new">
+      <h4>The Gravity Approach</h4>
+      <ul>
+        <li>Vertical bead tubes + solenoid gates ($24)</li>
+        <li>Beads pre-sorted in tubes — no vision needed</li>
+        <li>Zero calibration — gravity is constant</li>
+        <li>Fast: gate opens, bead drops, sub-second</li>
+        <li>Toaster-sized, portable, friendly</li>
+        <li>Near-indestructible mechanics</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- ════════════════ HOW IT WORKS ════════════════ -->
+<section>
+  <div class="section-label">How It Works</div>
+  <h2>Five steps. <em>Thirty seconds.</em></h2>
+  <p class="section-intro">From screen to finished necklace. No skill required. No bead touching. No mistakes.</p>
+
+  <div class="flow-steps">
+    <div class="flow-step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>Design</h4>
+        <p>Open the JewelGen app on any device. Choose your base (silk, wire, leather, chain), pick beads from 7 categories, arrange them on the visual necklace designer. Add a clasp. See a real-time preview of exactly what you'll get.</p>
+        <div class="step-detail">jewelgen.app -> visual designer -> drag beads -> preview</div>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>Load</h4>
+        <p>Snap bead cartridges into the machine's vertical slots. Each cartridge holds one bead type — pre-sorted, pre-labelled. Load a base spool (silk thread, jewellery wire, leather cord). Attach a clasp to the starter clip.</p>
+        <div class="step-detail">cartridge slot 1: Lapis Lazuli 10mm (qty: 50)<br>cartridge slot 2: Gold Spacer 6mm (qty: 100)<br>cartridge slot 3: Pearl White 8mm (qty: 40)<br>base spool: Silk Thread — Cream<br>clasp: Gold Lobster</div>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>Send</h4>
+        <p>Tap "Print" in the app. The design transfers wirelessly to the machine via Bluetooth. The machine validates: do you have enough beads? Is the right base loaded? Green light = ready.</p>
+        <div class="step-detail">app -> bluetooth -> ESP32 -> validate inventory -> ready</div>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h4>Print</h4>
+        <p>The machine runs the design. For each bead in the sequence, the correct solenoid gate opens. One bead drops onto the horizontal string. Gate closes. String advances. Next bead. 20 beads in under 30 seconds. The clasp crimps automatically at both ends.</p>
+        <div class="step-detail">GATE_OPEN: slot_1 (lapis) -> BEAD_DROP -> STRING_ADVANCE: 12mm<br>GATE_OPEN: slot_2 (gold) -> BEAD_DROP -> STRING_ADVANCE: 8mm<br>GATE_OPEN: slot_3 (pearl) -> BEAD_DROP -> STRING_ADVANCE: 10mm<br>... (x20 beads) ...<br>CRIMP_END -> CUT -> RELEASE</div>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="step-num">5</div>
+      <div class="step-content">
+        <h4>Collect</h4>
+        <p>The finished necklace drops into the padded output tray. Ready to wear, gift, or sell. Tap "Print Again" for another copy, or load a new design.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ THE MACHINE ════════════════ -->
+<div class="machine-section">
+  <div class="inner">
+    <div class="section-label">The Machine</div>
+    <h2>Inside the Bead Printer</h2>
+    <p class="section-intro">No robot arms. No vision systems. No complex calibration. Just gravity, gates, and one motor.</p>
+
+    <div class="machine-diagram"><span class="dim">┌──────────────────────────────────────────────────────┐</span>
+<span class="dim">│</span>  <span class="bright">JEWELGEN BEAD PRINTER</span>                                <span class="dim">│</span>
+<span class="dim">│</span>                                                      <span class="dim">│</span>
+<span class="dim">│</span>  <span class="gold">[C1]  [C2]  [C3]  [C4]  [C5]  [C6]</span>  <span class="dim">cartridge</span>   <span class="dim">│</span>
+<span class="dim">│</span>  <span class="gold"> ||    ||    ||    ||    ||    ||</span>   <span class="dim">slots</span>       <span class="dim">│</span>
+<span class="dim">│</span>   <span class="bright">O</span>     <span class="bright">O</span>     <span class="bright">O</span>     <span class="bright">O</span>     <span class="bright">O</span>     <span class="bright">O</span>    <span class="dim">bead</span>        <span class="dim">│</span>
+<span class="dim">│</span>   <span class="bright">O</span>     <span class="bright">O</span>     <span class="bright">O</span>     <span class="bright">O</span>     <span class="bright">O</span>     <span class="bright">O</span>    <span class="dim">stacks</span>      <span class="dim">│</span>
+<span class="dim">│</span>   <span class="bright">O</span>     <span class="bright">O</span>     <span class="bright">O</span>     <span class="bright">O</span>     <span class="bright">O</span>     <span class="bright">O</span>                <span class="dim">│</span>
+<span class="dim">│</span>   <span class="bright">O</span>     <span class="bright">O</span>     <span class="bright">O</span>     <span class="bright">O</span>     <span class="bright">O</span>     <span class="bright">O</span>                <span class="dim">│</span>
+<span class="dim">│</span>  <span class="gold">[==]  [==]  [==]  [==]  [==]  [==]</span>  <span class="dim">solenoid</span>    <span class="dim">│</span>
+<span class="dim">│</span>                                        <span class="dim">gates</span>       <span class="dim">│</span>
+<span class="dim">│</span>   <span class="gold">v</span>     <span class="gold">v</span>     <span class="gold">v</span>     <span class="gold">v</span>     <span class="gold">v</span>     <span class="gold">v</span>    <span class="dim">gravity</span>     <span class="dim">│</span>
+<span class="dim">│</span>                                        <span class="dim">drop</span>        <span class="dim">│</span>
+<span class="dim">│</span>  <span class="bright">===O==O==O==O==O==O==O==O==O====></span>  <span class="dim">string</span>      <span class="dim">│</span>
+<span class="dim">│</span>  <span class="gold">^</span>                                  <span class="gold">v</span>   <span class="dim">path</span>        <span class="dim">│</span>
+<span class="dim">│</span>  <span class="gold">spool                         output</span>              <span class="dim">│</span>
+<span class="dim">│</span>  <span class="gold">bay                           tray</span>                <span class="dim">│</span>
+<span class="dim">│</span>                                                      <span class="dim">│</span>
+<span class="dim">│</span>  <span class="dim">[ESP32]  [USB-C]  [BT/WiFi]  [  7" Screen  ]</span>      <span class="dim">│</span>
+<span class="dim">└──────────────────────────────────────────────────────┘</span></div>
+
+    <div class="spec-grid">
+      <div class="spec-card">
+        <span class="val">38cm</span>
+        <span class="desc">Width</span>
+      </div>
+      <div class="spec-card">
+        <span class="val">28cm</span>
+        <span class="desc">Depth</span>
+      </div>
+      <div class="spec-card">
+        <span class="val">32cm</span>
+        <span class="desc">Height</span>
+      </div>
+      <div class="spec-card">
+        <span class="val">2.5kg</span>
+        <span class="desc">Weight</span>
+      </div>
+      <div class="spec-card">
+        <span class="val">&lt;30s</span>
+        <span class="desc">Per necklace</span>
+      </div>
+      <div class="spec-card">
+        <span class="val">12</span>
+        <span class="desc">Cartridge slots</span>
+      </div>
+      <div class="spec-card">
+        <span class="val">USB-C</span>
+        <span class="desc">Power</span>
+      </div>
+      <div class="spec-card">
+        <span class="val">BT 5.0</span>
+        <span class="desc">Connectivity</span>
+      </div>
+    </div>
+
+    <h3 style="color: rgba(255,255,255,0.5); font-size: 14px; text-transform: uppercase; letter-spacing: 2px; margin-top: 64px; margin-bottom: 24px; font-family: Inter, sans-serif; font-weight: 600;">Bill of Materials</h3>
+
+    <table class="components-table">
+      <tr>
+        <th>Component</th>
+        <th>Purpose</th>
+        <th>Cost</th>
+      </tr>
+      <tr>
+        <td>ESP32 microcontroller</td>
+        <td>Brain, Bluetooth, WiFi</td>
+        <td>$8</td>
+      </tr>
+      <tr>
+        <td>12x solenoid mini-gates</td>
+        <td>Bead release mechanism</td>
+        <td>$24</td>
+      </tr>
+      <tr>
+        <td>NEMA 17 stepper motor</td>
+        <td>String advance</td>
+        <td>$12</td>
+      </tr>
+      <tr>
+        <td>A4988 motor driver</td>
+        <td>Stepper control</td>
+        <td>$6</td>
+      </tr>
+      <tr>
+        <td>12x acrylic bead tubes</td>
+        <td>Cartridge housings</td>
+        <td>$15</td>
+      </tr>
+      <tr>
+        <td>Dual roller feed mechanism</td>
+        <td>String tensioning + advance</td>
+        <td>$20</td>
+      </tr>
+      <tr>
+        <td>Crimp servo + die</td>
+        <td>Clasp attachment</td>
+        <td>$18</td>
+      </tr>
+      <tr>
+        <td>Wire cutter servo</td>
+        <td>String cut to length</td>
+        <td>$12</td>
+      </tr>
+      <tr>
+        <td>IR break-beam sensors x12</td>
+        <td>Bead drop confirmation</td>
+        <td>$15</td>
+      </tr>
+      <tr>
+        <td>3D-printed enclosure</td>
+        <td>Housing + cartridge rails</td>
+        <td>$30</td>
+      </tr>
+      <tr>
+        <td>5V 4A USB-C power supply</td>
+        <td>Power</td>
+        <td>$10</td>
+      </tr>
+      <tr>
+        <td>PCB + wiring harness</td>
+        <td>Internal connections</td>
+        <td>$15</td>
+      </tr>
+      <tr>
+        <td><strong>Total build cost</strong></td>
+        <td></td>
+        <td>$185</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- ════════════════ ECOSYSTEM ════════════════ -->
+<section>
+  <div class="section-label">The Ecosystem</div>
+  <h2>Software + Hardware + <em>Consumables</em></h2>
+  <p class="section-intro">JewelGen isn't a product. It's a platform. The app designs. The machine builds. The cartridges keep flowing. Each layer feeds the others.</p>
+
+  <div class="ecosystem">
+    <div class="eco-row">
+      <div class="eco-node software">JewelGen App</div>
+      <div class="eco-arrow">+</div>
+      <div class="eco-node software">Design Community</div>
+      <div class="eco-arrow">+</div>
+      <div class="eco-node software">Template Library</div>
+    </div>
+    <div class="eco-arrow" style="font-size: 24px;">&#8595;</div>
+    <div class="eco-row">
+      <div class="eco-node primary">JewelGen Bead Printer</div>
+    </div>
+    <div class="eco-arrow" style="font-size: 24px;">&#8595;</div>
+    <div class="eco-row">
+      <div class="eco-node revenue">Bead Cartridges</div>
+      <div class="eco-node revenue">Base Spools</div>
+      <div class="eco-node revenue">Clasp Packs</div>
+      <div class="eco-node revenue">Charm Add-ons</div>
+    </div>
+    <div class="eco-arrow" style="font-size: 24px;">&#8595;</div>
+    <div class="eco-row">
+      <div class="eco-node hardware">Marketplace</div>
+      <div class="eco-arrow">+</div>
+      <div class="eco-node hardware">Kiosk Mode</div>
+      <div class="eco-arrow">+</div>
+      <div class="eco-node hardware">Subscription Boxes</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- ════════════════ BUSINESS MODEL ════════════════ -->
+<section>
+  <div class="section-label">Business Model</div>
+  <h2>The razor and <em>the blades</em></h2>
+  <p class="section-intro">The machine gets them in the door. The cartridges keep them coming back. The software makes them stay forever.</p>
+
+  <div class="revenue-grid">
+    <div class="revenue-card">
+      <div class="type">One-time</div>
+      <h4>Machine Sales</h4>
+      <p>JewelGen Bead Printer sold direct-to-consumer. Three tiers from hobbyist to production. The entry point to the ecosystem.</p>
+      <span class="margin">40-60% margin</span>
+    </div>
+    <div class="revenue-card">
+      <div class="type">Recurring</div>
+      <h4>Bead Cartridges</h4>
+      <p>Pre-sorted, pre-loaded, snap-in cartridges. 50+ varieties across 7 categories. The convenience that keeps makers buying. This is the engine.</p>
+      <span class="margin">70%+ margin</span>
+    </div>
+    <div class="revenue-card">
+      <div class="type">Recurring</div>
+      <h4>Base + Clasp Packs</h4>
+      <p>Silk spools, wire rolls, leather cord, chain. Clasp variety packs. Charm collections. Everything the machine consumes.</p>
+      <span class="margin">60% margin</span>
+    </div>
+    <div class="revenue-card">
+      <div class="type">Subscription</div>
+      <h4>JewelGen Pro Software</h4>
+      <p>Free tier for basic design. Pro unlocks AI pattern generation, template library, batch printing, design marketplace, analytics.</p>
+      <span class="margin">90%+ margin</span>
+    </div>
+    <div class="revenue-card">
+      <div class="type">Marketplace</div>
+      <h4>Design Marketplace</h4>
+      <p>Makers sell their necklace designs to other JewelGen users. We take 15% commission. Zero inventory. Pure platform revenue.</p>
+      <span class="margin">100% margin</span>
+    </div>
+    <div class="revenue-card">
+      <div class="type">Monthly Box</div>
+      <h4>Subscription Boxes</h4>
+      <p>"Ocean Collection", "Autumn Warmth", "Celestial". Monthly themed boxes with curated cartridges + exclusive design templates. Unboxing culture meets craft.</p>
+      <span class="margin">65% margin</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- ════════════════ PRODUCT LINE ════════════════ -->
+<section>
+  <div class="section-label">Product Line</div>
+  <h2>Three machines. <em>Every maker.</em></h2>
+
+  <div class="sku-grid">
+    <div class="sku-card">
+      <div class="sku-name">Mini</div>
+      <div class="sku-target">Hobbyists + gift makers</div>
+      <div class="sku-price"><span>$</span>399</div>
+      <ul class="sku-features">
+        <li>6 cartridge slots</li>
+        <li>1 base spool bay</li>
+        <li>Bluetooth connectivity</li>
+        <li>App-controlled only</li>
+        <li>Manual clasp finishing</li>
+        <li>20 beads / necklace max</li>
+        <li>Compact: 30x20x25cm</li>
+      </ul>
+    </div>
+    <div class="sku-card featured">
+      <div class="sku-name">Pro</div>
+      <div class="sku-target">Etsy sellers + market vendors</div>
+      <div class="sku-price"><span>$</span>899</div>
+      <ul class="sku-features">
+        <li>12 cartridge slots</li>
+        <li>3 base spool bays</li>
+        <li>Bluetooth + WiFi</li>
+        <li>7" touchscreen</li>
+        <li>Auto-clasp crimping</li>
+        <li>40 beads / necklace max</li>
+        <li>Batch print queue</li>
+      </ul>
+    </div>
+    <div class="sku-card">
+      <div class="sku-name">Studio</div>
+      <div class="sku-target">Workshops + retail kiosks</div>
+      <div class="sku-price"><span>$</span>1,999</div>
+      <ul class="sku-features">
+        <li>24 cartridge slots</li>
+        <li>6 base spool bays</li>
+        <li>WiFi + Ethernet</li>
+        <li>10" kiosk touchscreen</li>
+        <li>Dual auto-clasp</li>
+        <li>60 beads / necklace max</li>
+        <li>Payment integration</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- ════════════════ TIMELINE ════════════════ -->
+<section>
+  <div class="section-label">Roadmap</div>
+  <h2>From screen to <em>machine</em></h2>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-date">Now — Q2 2026</div>
+      <h4>Phase 1: The Software</h4>
+      <p>Build JewelGen into the design tool jewellery makers can't live without. Free to use. Grow the community. Prove the demand before building any hardware.</p>
+      <div class="timeline-deliverables">
+        <span>Visual necklace designer</span>
+        <span>Pattern engine</span>
+        <span>Template library</span>
+        <span>Community gallery</span>
+        <span>Bill of materials export</span>
+        <span>Mobile responsive</span>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">Q3 2026</div>
+      <h4>Phase 2: Validate</h4>
+      <p>Launch the Bead Tape service. Customers design online, we ship pre-sorted bead strips + threading jig. Validate demand with zero hardware risk. Collect data on popular bead types, patterns, and price sensitivity.</p>
+      <div class="timeline-deliverables">
+        <span>Bead tape fulfilment</span>
+        <span>Order + payment system</span>
+        <span>Supplier relationships</span>
+        <span>Customer feedback loop</span>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">Q4 2026</div>
+      <h4>Phase 3: Prototype</h4>
+      <p>Build the first gravity-fed bead printer. 3D-printed housing, ESP32 brain, solenoid gates, single stepper motor. Test with real beads, real designs, real users. Iterate fast.</p>
+      <div class="timeline-deliverables">
+        <span>Working prototype</span>
+        <span>ESP32 firmware</span>
+        <span>App-to-machine Bluetooth</span>
+        <span>Cartridge design</span>
+        <span>User testing</span>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">Q1 2027</div>
+      <h4>Phase 4: Launch</h4>
+      <p>Kickstarter or direct pre-orders to the community we've already built. Ship the JewelGen Mini first. Pro and Studio follow. Cartridge subscription from day one.</p>
+      <div class="timeline-deliverables">
+        <span>Crowdfunding campaign</span>
+        <span>Manufacturing partner</span>
+        <span>Mini SKU ships</span>
+        <span>Cartridge store live</span>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">2027+</div>
+      <h4>Phase 5: Platform</h4>
+      <p>Design marketplace. Kiosk mode for retail. Subscription boxes. API for third-party integrations. JewelGen becomes the operating system for bead jewellery.</p>
+      <div class="timeline-deliverables">
+        <span>Marketplace launch</span>
+        <span>Kiosk firmware</span>
+        <span>Subscription boxes</span>
+        <span>Pro + Studio SKUs</span>
+        <span>Retail partnerships</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ VISION ════════════════ -->
+<div class="vision-section">
+  <div class="inner">
+    <div class="section-label">The Vision</div>
+    <h2>Every bead, <em>exactly where you imagined it.</em></h2>
+    <p>JewelGen exists because making beautiful things shouldn't hurt your hands, waste your weekends, or limit your ambitions.</p>
+    <p>We're not automating craft. We're liberating it. The design is still yours. The creativity is still yours. The machine just handles the part that was never creative to begin with.</p>
+    <p>Design in seconds. Print in seconds. Sell in minutes.</p>
+    <div class="signature">JewelGen, 2026</div>
+  </div>
+</div>
+
+<footer>
+  <p>JewelGen &mdash; Confidential Product Plan &mdash; 2026</p>
+  <p style="margin-top: 8px;"><a href="https://jewelgen.vercel.app">jewelgen.vercel.app</a></p>
+</footer>
+
+</body>
+</html>
